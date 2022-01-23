@@ -59,6 +59,8 @@ http.createServer(function(req, res) {
 		}
 	});
 }).listen(port);
-
+if (process.env.IS_HEROKU) {
+	console.log(port)
+}
 
 
