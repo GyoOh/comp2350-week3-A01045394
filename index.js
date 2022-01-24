@@ -1,9 +1,9 @@
 const mysql = require('mysql');
 const http = require('http');
-
+const process = require('process')
 const port = process.env.PORT || 3000;
 
-const dbConfig = {
+const dbConfigHeroku = {
 	host: "i0rgccmrx3at3wv3.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
 	user: "vktbaxbkg7ang30j",
 	password: "nevso5emlc7kk276",
@@ -11,8 +11,24 @@ const dbConfig = {
 	multipleStatements: false,
 	reconnect: true
 };
+const dbConfigLocal = {
+	host: "localhost",
+	user: "root",
+	password: "skdisk12",
+	database: "test_relationships_g_oh;",
+	multipleStatements: false,
+	reconnect: true
+};
+const connection = process.env.IS_HEROKU == undefined ? dbConfigLocal : dbConfigHeroku;
 
-var database = mysql.createPool(dbConfig);
+// const connection = null;
+// if (process.env.IS_HEROKU == undefined) {
+//  connection = dbConfigLocal;
+// } else {
+//  connection = dbConfigHeroku;
+// }
+
+var database = mysql.createPool(connection);
 
 database.getConnection((err, dbConnection) => {
 	if (!err) {
@@ -59,8 +75,4 @@ http.createServer(function(req, res) {
 		}
 	});
 }).listen(port);
-if (process.env.IS_HEROKU) {
-	console.log(port)
-}
-
 
