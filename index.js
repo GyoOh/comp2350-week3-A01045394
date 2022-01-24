@@ -15,7 +15,7 @@ const dbConfigLocal = {
 	host: "localhost",
 	user: "root",
 	password: "skdisk12",
-	database: "test_relationships_g_oh;",
+	database: "test_relationships_g_oh",
 	multipleStatements: false,
 	reconnect: true
 };
